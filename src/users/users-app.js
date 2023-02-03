@@ -4,7 +4,9 @@ import usersStore  from "./store/users-store";
  * Función que plasma toda la aplicación en el HTML.
  * @param {HTMLDivElement} element Elemento HTML
  */
-export const UsersApp = ( element ) => {
+export const UsersApp = async ( element ) => {
   element.innerHTML = 'Loading...';
-  usersStore.loadNextPage();
+  await usersStore.loadNextPage();
+
+  console.log( 'users del store: ',usersStore.getUsers() );
 }
