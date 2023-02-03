@@ -8,22 +8,18 @@ const state = {
 }
 
 const loadNextPage = async () => { 
-  const users = await loadUsersByPage( state.currentPage + 1 ); 
-  console.log('antes', state.currentPage );
+  const users = await loadUsersByPage( state.currentPage + 1 );  
   if ( users.length === 0 ) {
     return;
   }
   state.currentPage += 1; 
-  state.users = users; 
-  console.log('ahora', state.currentPage );
+  state.users = users;  
 }
 
-const loadPreviousPage = async () => { 
-  console.log('antes', state.currentPage );
+const loadPreviousPage = async () => {  
   if( state.currentPage <= 1)  return; 
   state.currentPage --; 
-  state.users = await loadUsersByPage( state.currentPage  );
-  console.log('ahora', state.currentPage );
+  state.users = await loadUsersByPage( state.currentPage  ); 
 }
 
 const onUserChanged =  () => {

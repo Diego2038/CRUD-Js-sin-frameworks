@@ -21,13 +21,13 @@ export const renderButtons = ( element ) => {
   element.append( prevButton, currentPageLabel, nextButton );
 
   nextButton.addEventListener( 'click', async () => {
-    usersStore.loadNextPage();
+    await usersStore.loadNextPage(); // ! OJO, estos son promesas, si no haces un await, el cambio no se verá reflejado hasta el siguiente evento (sin esto pareciera que estás haciendo un evento atrasado).
     renderTable( element );
     currentPageLabel.innerHTML = usersStore.getCurrentPage();
   });
 
   prevButton.addEventListener( 'click', async () => {
-    usersStore.loadPreviousPage();
+    await usersStore.loadPreviousPage(); // ! OJO, estos son promesas, si no haces un await, lo mismo que se describió arriba
     renderTable( element );
     currentPageLabel.innerHTML = usersStore.getCurrentPage();
   });
