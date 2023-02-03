@@ -1,0 +1,12 @@
+
+
+button {
+  margin: 10px;
+  background-color: #464141;
+  color: white;
+}
+
+#current-page {
+  font-size: 1.3rem;
+  margin: 0px 10px;
+}
