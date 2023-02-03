@@ -6,11 +6,13 @@ import { localhostUserToModel } from "../mappers/localhost-user.mapper";
  * @returns {Promise<User[]>}
  */
 export const loadUsersByPage = async ( page = 1 ) => {
+  console.log('Me llegó con la pagina: ', page );
   const resp = await fetch(`${ import.meta.env.VITE_BASE_URL }/users?_page=${ page }`);
 
   const data = await resp.json()
   
   const users = data.map( localhostUserToModel );
+  console.log('users', users )
   
   
   // console.log( data );

@@ -23,20 +23,6 @@ const createTable = () => {
   return table;
 }
 
-const adjuntarUsers = ( user ) => { 
-  const filaTabla = document.createElement( 'tr ');
-
-  filaTabla.innerHTML = `
-    <th>${ user.id }</th>
-    <th>${ user.balance }</th>
-    <th>${ user.firstName }</th>
-    <th>${ user.LastName}</th>
-    <th>${ user.isActive}</th>
-    <th> <a href="#">Select</a> | <a href="#">Delete</a> </th>
-  `;
-  table.querySelector('tbody').innerHTML= 'xddd'; 
-  
-}
 
 /**
  * 

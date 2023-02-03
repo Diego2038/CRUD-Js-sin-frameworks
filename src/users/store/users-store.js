@@ -7,17 +7,23 @@ const state = {
   currentPage: 0,
 }
 
-const loadNextPage = async () => {
+const loadNextPage = async () => { 
   const users = await loadUsersByPage( state.currentPage + 1 ); 
+  console.log('antes', state.currentPage );
   if ( users.length === 0 ) {
     return;
   }
-  state.currentPage += 1;
+  state.currentPage += 1; 
   state.users = users; 
+  console.log('ahora', state.currentPage );
 }
 
-const loadPreviousPage = async () => {
-  throw new Error('No implementado aún');
+const loadPreviousPage = async () => { 
+  console.log('antes', state.currentPage );
+  if( state.currentPage <= 1)  return; 
+  state.currentPage --; 
+  state.users = await loadUsersByPage( state.currentPage  );
+  console.log('ahora', state.currentPage );
 }
 
 const onUserChanged =  () => {
