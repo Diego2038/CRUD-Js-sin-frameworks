@@ -1,8 +1,9 @@
 import usersStore from '../../store/users-store';
+import { showModal } from '../render-modal/render-modal';
 import './render-table.css';
 
 
-let table;
+let table; 
 
 const createTable = () => {
   const table = document.createElement( 'table' );
@@ -23,6 +24,17 @@ const createTable = () => {
   return table;
 }
 
+/**
+ * 
+ * @param {MouseEvent} event 
+ */
+const tableSelectListener = (event) => {
+  const element = event.target.closest('.select-user');
+  // console.log( element );   
+  if( !element ) return;
+  const id = element.getAttribute('data-id');
+  showModal( id );
+}
 
 /**
  * 
@@ -34,21 +46,28 @@ export const renderTable = ( element ) => {
 
   if ( !table ) {
     table = createTable();
-
     element.append( table );
+
+    //TODO: Listeners en la tabla
+    table.addEventListener('click', tableSelectListener);
   }
 
   let tableHTML = '';
 
   users.map( user => {
-    tableHTML += `<tr>
+    tableHTML += `
+    <tr>
       <th>${ user.id }</th>
       <th>${ user.balance }</th>
       <th>${ user.firstName }</th>
       <th>${ user.lastName}</th>
       <th>${ user.isActive}</th>
-      <th> <a href="#">Select</a> | <a href="#">Delete</a> </th>
-      </tr>
+      <th> 
+        <a href="#" class="select-user" data-id="${ user.id }">Select </a> 
+        |
+        <a href="#" class="delete-user" data-id="${ user.id }">Delete</a> 
+      </th>
+    </tr>
     `;
   } );
 

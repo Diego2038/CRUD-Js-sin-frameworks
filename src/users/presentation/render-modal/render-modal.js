@@ -1,15 +1,35 @@
 import html from './render-modal.html?raw';
+import { getUserById } from "../../use-cases/get-user-by-id";
 import './render-modal.css'; 
+import { User } from '../../models/user';
 
 let modal, form;
+let loadedUser = {};
 
-export const closeModal = () => {
+export const showModal = async ( id ) => {
   modal?.classList.remove('hide-modal');
+  loadedUser = {};
+  
+  if ( !id ) return;
+  const user = await getUserById( id );
+  setFormValues( user );
 }
 
 export const hideModal = () => {
   modal?.classList.add('hide-modal');
   form?.reset();
+}
+
+/**
+ * 
+ * @param {User} user 
+ */
+const setFormValues = ( user ) => {
+  form.querySelector('[name="firstName"]').value = user.firstName;
+  form.querySelector('[name="lastName"]').value = user.lastName;
+  form.querySelector('[name="balance"]').value = user.balance;
+  form.querySelector('[name="isActive"]').checked = user.isActive;
+  loadedUser = user;
 }
 
 /**
@@ -30,6 +50,7 @@ export const renderModal = ( element, callback ) => {
 
   form = modal.querySelector('form');
 
+  // * NOTA: Este archivo se ejecuta sólo una vez, pero al ser event listeners quedan activos
   modal.addEventListener('click', ( event ) => {
     // console.log( !event.target.classList.contains('modal-container') );
     if( !event.target.classList.contains('modal-container')) return;  
@@ -41,7 +62,7 @@ export const renderModal = ( element, callback ) => {
 
     const refForm = new FormData( form );
 
-    const userLike = {};
+    const userLike = { ...loadedUser};
     for (const [ key, value ] of refForm) {
       if ( key === 'balance' ) {
         userLike[key] = + value;

@@ -12,8 +12,7 @@ export const renderAddButton = ( element, callback ) => {
   fabButton.classList.add('fab-button');
 
   element.append( fabButton );
-
-  // TODO: Implementar adición user
+ 
   fabButton.addEventListener('click', () => {
     if ( !callback ) return;
     callback();
