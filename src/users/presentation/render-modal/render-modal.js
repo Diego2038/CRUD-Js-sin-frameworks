@@ -63,6 +63,8 @@ export const renderModal = ( element, callback ) => {
     const refForm = new FormData( form );
 
     const userLike = { ...loadedUser};
+    userLike['isActive'] = false; // ! Se pone este valor por defecto, porque
+    // ! en el barrido del for of no toma en cuenta el check box si es false
     for (const [ key, value ] of refForm) {
       if ( key === 'balance' ) {
         userLike[key] = + value;

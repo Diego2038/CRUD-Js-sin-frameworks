@@ -1,8 +1,10 @@
+import { localhostUserToModel } from "../mappers/localhost-user.mapper";
 import { userToLocalHost } from "../mappers/user-to-localhost.mapper";
 import { User } from "../models/user";
 
 /**
- * 
+ * Función que permite crear o actualizar el usuairo según si
+ * el parámetros userLike tenga el id en sus atributos.
  * @param {Like<User>} userLike
  */
 export const saveUser = async ( userLike ) => {
@@ -12,11 +14,14 @@ export const saveUser = async ( userLike ) => {
   const user = new User( userLike ); 
   const userToSave = userToLocalHost(user); 
 
+  let userUpdated;
   if ( userToSave.id ) {  
-    return await updateUser( userToSave );
+    userUpdated = await updateUser( userToSave );
+  } else {
+    userUpdated = await createUser( userToSave ); 
   }
 
-  return await createUser( userToSave ); 
+  return localhostUserToModel( userUpdated ) ;
 }
 
 const createUser = async ( user ) => {
@@ -35,8 +40,7 @@ const createUser = async ( user ) => {
 
 
 const updateUser = async ( user ) => {
-  const url = `${ import.meta.env.VITE_BASE_URL }/users/${ user.id }`;
-  console.log(url );
+  const url = `${ import.meta.env.VITE_BASE_URL }/users/${ user.id }`; 
   const res = await fetch( url, {
     method: 'PATCH', // También puede ser PUT, todo depende del backend
     body: JSON.stringify( user ),
