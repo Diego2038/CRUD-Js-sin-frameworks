@@ -10,13 +10,9 @@ export const saveUser = async ( userLike ) => {
   if( !userLike.firstName && !userLike.lastName ) throw 'firstName and lastName are required😡😡😡';
   
   const user = new User( userLike ); 
-  const userToSave = userToLocalHost(user);
+  const userToSave = userToLocalHost(user); 
 
-  console.log('1', {user});
-  console.log('2', {userToSave});
-
-  if ( userLike.id ) { 
-    console.log('¿¿¿¿')
+  if ( userToSave.id ) {  
     return await updateUser( userToSave );
   }
 
