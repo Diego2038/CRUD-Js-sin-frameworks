@@ -3,6 +3,7 @@ import { renderButtons } from "./presentation/render-buttons/render-buttons";
 import { closeModal, renderModal } from "./presentation/render-modal/render-modal";
 import { renderTable } from "./presentation/render-table/render-table";
 import usersStore  from "./store/users-store";
+import { saveUser } from "./use-cases/save-user";
 
 /**
  * Función que plasma toda la aplicación en el HTML.
@@ -17,5 +18,9 @@ export const UsersApp = async ( element ) => {
   renderTable( element );
   renderButtons( element );
   renderAddButton( element, closeModal );
-  renderModal( element );
+  renderModal( element, async ( userLike) => {
+    const res = await saveUser( userLike );
+    usersStore.onUserChanged( res );
+    renderTable();
+  } );
 }

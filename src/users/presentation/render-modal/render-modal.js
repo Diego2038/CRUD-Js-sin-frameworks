@@ -1,5 +1,5 @@
 import html from './render-modal.html?raw';
-import './render-modal.css';
+import './render-modal.css'; 
 
 let modal, form;
 
@@ -15,10 +15,12 @@ export const hideModal = () => {
 /**
  *  
  * @param {HTMLDivElement} element 
+ * @param {(userLike) => Promise<void>} callback
  */
-export const renderModal = ( element ) => {
+export const renderModal = ( element, callback ) => {
 
   if ( modal ) return;
+  if ( !callback) throw new Error(' callback parameter needs exist');
 
   modal = document.createElement('div');
   modal.innerHTML = html;
@@ -51,6 +53,9 @@ export const renderModal = ( element ) => {
       }
       userLike[key] = value; 
     }
+    // console.log( {userLike})
+    
+    callback( userLike );
     hideModal();
   })
 }
